@@ -1,0 +1,327 @@
+For R1:
+
+1. enable
+2. configure terminal
+3. hostname R1
+4. no ip domain-lookup
+5. enable secret class
+6. end
+7. show run 
+8. conf t
+9. ********************************
+ !!!AUTHORIZED ACCESS ONLY!!!
+********************************
+&
+10. exit
+11. exit
+12. enable
+13. class
+14. conf t
+15. line console 0
+16. password cisco
+17. login
+18. exit
+19. exit
+20. enable
+21. class
+22. line vty 0 4
+23. password cisco
+24. login
+25. exit
+26. service password-encryption
+27. interface fastethernet 0/0
+28. ip address 192.168.1.1 255.255.255.0
+29. no shutdown
+30. interface serial 0/0/0
+31. ip address 192.168.2.1 255.255.255.0
+32. clock rate 64000 
+33. no shutdown
+34. end
+35. copy running-config startup-config
+
+
+FOR R2
+
+
+1. enable
+2. configure terminal
+3. hostname R2
+4. no ip domain-lookup
+5. enable secret class
+6. banner motd &
+7. ********************************
+ !!!AUTHORIZED ACCESS ONLY!!!
+********************************
+& 
+8. line console 0
+9. password cisco
+10. password cisco
+11. exit
+12. line vty 0 4
+13. password cisco
+14. login
+15. exit
+16. interface serial 0/0/0
+17.ip address 192.168.2.2 255.255.255.0
+18. no shut
+19. interface fastethernet 0/0
+20. ip address 192.168.3.1 255.255.255.0
+21. no shutdown
+22. end
+23. copy running-config startup-config
+
+Task 6: Verify and Test the Configurations. 
+1. R1#show ip route
+2. R2#show ip route
+3. R1#show ip interface brief
+4. R2#show ip interface brief
+
+Step 3: Test connectivity. 
+In PC1 ping 192.168.1.1
+In PC2 ping 192.168.3.1
+
+Task 7: Reflection 
+1. ping 192.168.3.10
+2. ping 192.168.3.10
+3. ping 192.168.2.1
+
+Task 8: Documentation 
+For router 1:
+1. show running-cofig
+Ans: Building configuration...
+
+Current configuration : 946 bytes
+!
+version 12.3
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+service password-encryption
+!
+hostname R1
+!
+!
+!
+enable secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.1.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ ip address 192.168.2.1 255.255.255.0
+ clock rate 64000
+!
+interface Serial0/0/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd ^C
+********************************
+ !!!AUTHORIZED ACCESS ONLY!!!
+********************************
+^C
+!
+!
+!
+!
+!
+line con 0
+ password 7 0822455D0A16
+ login
+!
+line aux 0
+!
+line vty 0 4
+ password 7 0822455D0A16
+ login
+!
+!
+!
+end
+
+
+2. show ip route 
+Ans: Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+C    192.168.1.0/24 is directly connected, FastEthernet0/0
+C    192.168.2.0/24 is directly connected, Serial0/0/0
+
+3.  show ip interface brief
+Ans: Interface              IP-Address      OK? Method Status                Protocol 
+FastEthernet0/0        192.168.1.1     YES manual up                    	up 
+FastEthernet0/1        unassigned      YES unset  administratively down 	down 
+Serial0/0/0            192.168.2.1     YES manual up                    	up 
+Serial0/0/1            unassigned      YES unset  administratively down 	down 
+Vlan1                  unassigned      YES unset  administratively down 	down
+
+For Router 2: 
+1. show running-config
+Ans: Building configuration...
+
+Current configuration : 913 bytes
+!
+version 12.3
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R2
+!
+!
+!
+enable secret 5 $1$mERr$9cTjUIEqNGurQiFU.ZeCi1
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain-lookup
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.3.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Serial0/0/0
+ ip address 192.168.2.2 255.255.255.0
+!
+interface Serial0/0/1
+ no ip address
+ clock rate 2000000
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+banner motd ^C
+********************************
+ !!!AUTHORIZED ACCESS ONLY!!!
+********************************
+^C
+!
+!
+!
+!
+!
+line con 0
+ password cisco
+ login
+!
+line aux 0
+!
+line vty 0 4
+ password cisco
+ login
+!
+!
+!
+end
+
+2.  show ip route
+Ans: Codes: C - connected, S - static, I - IGRP, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
+
+Gateway of last resort is not set
+
+C    192.168.2.0/24 is directly connected, Serial0/0/0
+C    192.168.3.0/24 is directly connected, FastEthernet0/0
+
+3.  show ip interface brief
+Ans: Interface              IP-Address      OK? Method Status                Protocol 
+FastEthernet0/0        192.168.3.1     YES manual up                    	up 
+FastEthernet0/1        unassigned      YES unset  administratively down 	down 
+Serial0/0/0            192.168.2.2     YES manual up                    	up 
+Serial0/0/1            unassigned      YES unset  administratively down 	down 
+Vlan1                  unassigned      YES unset  administratively down 	down

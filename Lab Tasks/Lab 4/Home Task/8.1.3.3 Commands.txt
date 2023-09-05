@@ -1,0 +1,6 @@
+In R1:
+1. en
+2. conf t
+3. int g0/0
+4. ip helper-address 192.168.60.253
+

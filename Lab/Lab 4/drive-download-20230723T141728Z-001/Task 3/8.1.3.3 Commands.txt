@@ -1,0 +1,34 @@
+In R2:
+1. en
+2. conf t
+3. ip dhcp exclude-address 192.168.10.1 192.168.10.10
+4. ip dhcp exclude-address 192.168.30.1 192.168.30.10
+5. ip dhcp pool R1-LAN
+6. network 192.168.10.0 255.255.255.0
+7. default-router 192.168.10.1
+8. dns-server 192.168.20.254
+9. exit
+10. ip dhcp pool R3-LAN 
+11. network 192.168.30.0 255.255.255.0
+12. default-router 192.168.30.1
+13. dns-server 192.168.20.254
+14. exit
+
+
+In R1:
+1. en
+2. conf t
+3. int g0/0
+4. ip helper-address 10.1.1.2
+
+In R3:
+1. en
+2. conf t
+3. int g0/0
+4. ip helper address 10.2.2.2
+
+In R2:
+1. int g0/1
+2. ip address dhcp
+3. no shut
+

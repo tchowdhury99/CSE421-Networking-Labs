@@ -1,0 +1,53 @@
+In PC1:
+1. ipconfig /all
+
+In PC3
+1. ipconfig /all 
+
+In PC1
+1. ping 10.10.1.18
+2. tracert 10.10.1.18
+
+In PC3
+1. tracert 10.10.1.98 
+
+In R1:
+1. cisco
+2. en
+3. class
+4. show ip route
+5. show ip interface brief
+
+In R3:
+1. cisco
+2. en
+3. class 
+4. Show ip interface brief
+5. show ip route
+
+In R2:
+1. cisco
+2. en
+3. class
+4. show ip interface brief
+5. conf t
+6. interface s0/0/0
+7. ip address 10.10.1.5 255.255.255.252
+8. no shut
+9. exit
+
+in PC1
+1. 10.10.1.18
+
+In PC3
+1. ping 10.10.1.98
+
+In PC2
+1. ipv6config /all
+
+In PC4
+1. ipv6config /all
+2. ping 2001:DB8:1:1::2
+3. tracert 2001:DB8:1:1::2
+4. ping 2001:DB8:1:1::2
+
